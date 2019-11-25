@@ -16,7 +16,7 @@ bool readFile(char* name, long data[])
 		inFile.get(c);
 		if (inFile.eof())
 			break;
-		data[c]++;
+		data[c]++;// luu theo bang ma ASCII
 	}
 
 	inFile.close();
@@ -121,7 +121,7 @@ void compressionData(char* inName, char* outName)//nén dữ liệu từ file in
 	for (int i = 0; i < str.length(); i++)//tách 8 bit -> kí tự lưu vào file nén
 	{
 		if (str[i] == '1')
-			d |= (1 << (7 - (i % 8)));
+			d |= (1 << (7 - (i % 8)));//d+=2^(2-(i%8))
 		if ((i - 7) % 8 == 0)
 		{
 			outfile << d;
@@ -164,7 +164,7 @@ void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file
 			data[j] = c;
 			infile >> ts;
 			freq[j] = ts;
-			infile.get(c);
+			infile.get(c);//doc ky tu " "
 			
 		}
 		else if (j != tmp)
@@ -192,7 +192,7 @@ void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file
 		}
 		else
 			treeTmp = treeTmp->pRight;
-		if (!treeTmp->pLeft && !treeTmp->pRight)
+		if (!treeTmp->pLeft && !treeTmp->pRight)// leaf la 1 ky tu
 		{
 			outfile << treeTmp->c;
 			treeTmp = tree->array[0];

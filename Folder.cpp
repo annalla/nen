@@ -72,4 +72,41 @@ void compressionFolder(string folderPath, ofstream &outFile,string folderName )
 	}
 	
 }
+void depressionFolder(string folderpath, ifstream &infile)
+{
+	string namefolder;
+	getline(infile, namefolder);
+	folderpath += ("\\" + namefolder);
+	char *s;
+	s = new char[Max];
+	int i = 0;
+	while (i < folderpath.length())
+	{
+
+		s[i] = folderpath[i];
+		i++;
+	}
+	s[i] = '\0';
+	if (_mkdir(s) == -1)
+		cout << "Error to open folder: " << namefolder << endl;
+	else
+	{
+		delete[] s;
+		int nFile, nFolder;
+		infile >> nFile;
+		infile >> nFolder;
+		for (int i = 0; i < nFile; i++)
+		{
+			string nameFile;
+			getline(infile, nameFile);// doc dong trong
+			getline(infile, nameFile);
+			decodedData(infile, folderpath + "\\" + nameFile);
+		}
+		for (int i = 0; i < nFolder; i++)
+		{
+			getline(infile, namefolder);// doc dong trong
+			depressionFolder(folderpath, infile);
+		}
+	}
+}
 

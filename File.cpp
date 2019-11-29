@@ -1,7 +1,7 @@
 ﻿#include"File.h"
 
 
-bool readFile(char* name, long data[])
+bool readFile(string name, long data[])
 {
 	ifstream inFile;
 	char c;
@@ -16,7 +16,7 @@ bool readFile(char* name, long data[])
 		inFile.get(c);
 		if (inFile.eof())
 			break;
-		data[c]++;// luu theo bang ma ASCII
+		data[c]++;
 	}
 
 	inFile.close();
@@ -24,7 +24,7 @@ bool readFile(char* name, long data[])
 
 }
 
-bool DataAndFReq(char* name, char data[], unsigned& size, long freq[])
+bool DataAndFReq(string name, char data[], unsigned& size, long freq[])
 {
 	long ch[MAX_CHAR]{ 0 };
 	size = 0;
@@ -41,11 +41,11 @@ bool DataAndFReq(char* name, char data[], unsigned& size, long freq[])
 		}
 
 	}
-
+	//printDataAndFreq(data, size, freq);
 	return 1;
 }
 
-string encodedHuffmanData(char* name, vector<Code>codeTable)
+string encodedHuffmanData(string name, vector<Code>codeTable)
 {
 	string enCodedStr = "";
 	ifstream infile;
@@ -77,7 +77,7 @@ string encodedHuffmanData(char* name, vector<Code>codeTable)
 	infile.close();
 	return enCodedStr;
 }
-void compressionData(char* inName, char* outName)//nén dữ liệu từ file inName thành file outName
+void compressionData(string inName, string outName)//nén dữ liệu từ file inName thành file outName
 {
 	long text[MAX_CHAR]{ 0 };
 	char data[MAX_CHAR];//lưu kí tựu
@@ -121,7 +121,7 @@ void compressionData(char* inName, char* outName)//nén dữ liệu từ file in
 	for (int i = 0; i < str.length(); i++)//tách 8 bit -> kí tự lưu vào file nén
 	{
 		if (str[i] == '1')
-			d |= (1 << (7 - (i % 8)));//d+=2^(2-(i%8))
+			d |= (1 << (7 - (i % 8)));
 		if ((i - 7) % 8 == 0)
 		{
 			outfile << d;
@@ -130,29 +130,36 @@ void compressionData(char* inName, char* outName)//nén dữ liệu từ file in
 	}
 	outfile.close();
 }
-
-void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file inName ra file outName
+void decodedFile(string inName, string outName)
 {
 	ifstream infile;
 	infile.open(inName, ios::in | ios::binary);
-	ofstream outfile;
-	outfile.open(outName, ios::out | ios::binary);
 	if (!infile)
 	{
 		cout << "Couldn't open file";
 		exit(1);
 	}
-
+	decodedData(infile, outName);
+	infile.close();
+}
+void decodedData(ifstream& infile, string outName)//giải nén dữ liệu từ file inName ra file outName
+{
+	
+	ofstream outfile;
+	outfile.open(outName, ios::out | ios::binary);
 	char c;
 	unsigned ts;//tan so
 	char data[MAX_CHAR];
 	long freq[MAX_CHAR];
 	unsigned size = 0;
 	int j = 0;
-
+	int count = 0,test=0;
 	//đọc bảng tần số, data và build encodeData
 	infile >> size;
 	unsigned tmp = size;
+	
+	vector<Code>arr;
+	unsigned length = 0;//số lượng bit trong encodedData
 	string encodedStr = "";
 	while (infile)
 	{
@@ -164,24 +171,34 @@ void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file
 			data[j] = c;
 			infile >> ts;
 			freq[j] = ts;
-			infile.get(c);//doc ky tu " "
+			infile.get(c);
 			
+		}
+		else if (j == tmp)
+		{
+			arr = findCodeTable(data, freq, size);
+			for (int i = 0; i < arr.size(); i++)
+			{
+				length += arr[i].size*arr[i].frequence;
+
+			}
 		}
 		else if (j != tmp)
 		{
+			//cout << count << endl;
+			//cout << c;
 			encodedStr += convertDecimalToBinary(c);
+			if (encodedStr.size()>=length)
+			{
+
+				//cout << length << endl;
+				break;
+			}
 		}
 		j++;
 	}
 	HuffmanTree*tree= buildHuffmanTree(data, freq, size);
-	HuffmanNode* treeTmp = tree->array[0];
-	vector<Code>arr;
-	arr = findCodeTable(data, freq, size);
-	unsigned length = 0;//số lượng bit trong encodedData
-	for (int i = 0; i < arr.size(); i++)
-	{
-		length += arr[i].size*arr[i].frequence;
-	}
+	HuffmanNode* treeTmp= tree->array[0];
 	//decodeData 
 	for (int i = 0; i <length; i++)
 	{
@@ -192,7 +209,7 @@ void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file
 		}
 		else
 			treeTmp = treeTmp->pRight;
-		if (!treeTmp->pLeft && !treeTmp->pRight)// leaf la 1 ky tu
+		if (!treeTmp->pLeft && !treeTmp->pRight)
 		{
 			outfile << treeTmp->c;
 			treeTmp = tree->array[0];
@@ -200,8 +217,9 @@ void decodedData(char* inName, char* outName)//giải nén dữ liệu từ file
 
 	}
 
-	infile.close();
+	
 	outfile.close();
+	
 }
 
 

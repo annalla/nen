@@ -4,6 +4,7 @@
 #define MAX_CODE 256
 #include<fstream>
 #include<vector>
+#include<string>
 using namespace std;
 
 struct HuffmanNode

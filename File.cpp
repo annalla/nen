@@ -69,7 +69,8 @@ string encodedHuffmanData(string name, vector<Code>codeTable)
 			if (c == codeTable[i].c)
 			{
 				codeTable[i].code[codeTable[i].size] = '\0';
-				enCodedStr = enCodedStr + codeTable[i].code;
+				enCodedStr += codeTable[i].code;
+				break;
 			
 			}
 		}
@@ -79,7 +80,7 @@ string encodedHuffmanData(string name, vector<Code>codeTable)
 }
 void compressionData(string inName, string outName)//nén dữ liệu từ file inName thành file outName
 {
-	long text[MAX_CHAR]{ 0 };
+	//long text[MAX_CHAR]{ 0 };
 	char data[MAX_CHAR];//lưu kí tựu
 	long freq[MAX_CHAR];//lưu tần số tương ứng
 	unsigned size;
@@ -157,7 +158,7 @@ void decodedData(ifstream& infile, string outName)//giải nén dữ liệu từ
 	//đọc bảng tần số, data và build encodeData
 	infile >> size;
 	unsigned tmp = size;
-	
+
 	vector<Code>arr;
 	unsigned length = 0;//số lượng bit trong encodedData
 	string encodedStr = "";

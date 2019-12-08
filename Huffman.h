@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include<iostream>
 #define MAX_CHAR 256
+//#define MAX_CHAR
 #define MAX_CODE 256
 #include<fstream>
 #include<vector>
-#include<string>
 using namespace std;
 
 struct HuffmanNode
@@ -42,7 +42,7 @@ HuffmanTree* creatAndBuildMinHeap(char arr[], long frequence[], unsigned size);/
 HuffmanTree* buildHuffmanTree(char arr[], long frequence[], unsigned size);//xây dựng cây huffman
 vector<Code> findCodeTable(char arr[], long frequence[], unsigned size);
 
-char convertBinarytoDeci(char binary[], unsigned size);
+//char convertBinarytoDeci(char binary[], unsigned size);
 string convertDecimalToBinary(int Deci);
 
 

@@ -52,7 +52,7 @@ void compressionFolder(string folderPath, ofstream &outFile,string folderName )
 		outFile << fileList[i] << endl;
  		compressionData(folderPath+"\\"+fileList[i],fileList[i]);
 		ifstream inFile;
-		inFile.open(fileList[i]);
+		inFile.open(fileList[i],ios::binary);
 		char c;
 		while (inFile)
 		{
@@ -109,4 +109,3 @@ void depressionFolder(string folderpath, ifstream &infile)
 		}
 	}
 }
-

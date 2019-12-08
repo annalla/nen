@@ -77,7 +77,7 @@ HuffmanNode* getMinNode(HuffmanTree* tree)
 {
 	HuffmanNode* tmp = tree->array[0];
 
-	//swapNode(tree->array[0], tree->array[tree->size - 1]);
+
 	tree->array[0] = tree->array[tree->size - 1];
 	--tree->size;
 	heapify(tree, 0);
@@ -148,44 +148,50 @@ void findCode(HuffmanNode* tree, vector<Code> &table, char code[], int top)
 		x.frequence = tree->frequence;
 		for (int i = 0; i < top; i++)
 			x.code[i] = code[i];
-		//printCode(code,top);
 		table.push_back(x);
 	}
 }
 
-char convertBinarytoDeci(char binary[], unsigned size)
-{
-	char deci = 0;
-	for (int i = 0; i < size; i++)
-	{
-		deci = deci + pow(2, size - 1 - i) * (binary[i] - 48);
-	}
-	return deci;
-}
+//char convertBinarytoDeci(char binary[], unsigned size)
+//{
+//	char deci = 0;
+//	for (int i = 0; i < size; i++)
+//	{
+//		if (binary[i])
+//			;
+//	
+//	}
+//	return deci;
+//}
 
 string convertDecimalToBinary(int Deci)
 {
 	string kq = "";
 	if (Deci < 0)
 		Deci += 256;
-	while (Deci)
+	int i = 8;
+	for (int j = 7; j >= 0; j--)
+	{
+		kq += (((Deci >> j) & 1) + 48);
+	}
+	--i;
+	/*while (Deci)
 	{
 		if (Deci % 2)
 			kq += '1';
 		else
 			kq += '0';
-		Deci = Deci / 2;
+		Deci /= 2;
 		
 	}
 	while (kq.length() != 8)
 	{
-		kq = kq + '0';
+		kq +='0';
 	}
-	reverse(kq.begin(), kq.end());
+	reverse(kq.begin(), kq.end());*/
 
 	return kq;
 }
-
 
 //test
 void printCode(char code[], unsigned size)

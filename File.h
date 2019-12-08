@@ -1,5 +1,9 @@
 ﻿#pragma once
+#define _CRT_SECURE_NO_DEPRECATE
 #include"Huffman.h"
+#include<cstdio>
+
+
 
 
 bool readFile(string name, long data[]);//đọc file lấy dữ liệu
@@ -10,7 +14,8 @@ void compressionData(string inName, string outName);// nén dữ liệu vào fil
 string encodedHuffmanData(string name, vector<Code>codeTable);//tạo chuỗi nén dữ liệu
 
 
-void decodedData(ifstream &inFile,string outName);//giải nén
+
+void decodedData(ifstream &inFile, string outName);//giải nén
 void decodedFile(string inName, string outName);
 
 //các hàm dưới dùng để test chương trình

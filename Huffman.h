@@ -4,6 +4,7 @@
 //#define MAX_CHAR
 #define MAX_CODE 256
 #include<fstream>
+#include<string>
 #include<vector>
 using namespace std;
 

@@ -29,16 +29,16 @@ void readFolder(string folderPath, vector<string>& listFileName, vector<string>&
 	}
 }
 
-void compressionFolder(string folderPath, ofstream &outFile,string folderName )
+void compressionFolder(string folderPath, ofstream& outFile)
 {
 	vector<string>folderList;
 	vector<string>fileList;
-	
+
 	readFolder(folderPath, fileList, folderList);
 	//Lưu thư mục 
-	string nameFolder="";
+	string nameFolder = "";
 	int i = folderPath.size() - 1;
-	while (i >= 0 && folderPath[i] != '\\' )
+	while (i >= 0 && folderPath[i] != '\\')
 	{
 		nameFolder += folderPath[i];
 		--i;
@@ -50,16 +50,16 @@ void compressionFolder(string folderPath, ofstream &outFile,string folderName )
 	for (int i = 0; i < fileList.size(); i++)//lưu tệp trong thư mục
 	{
 		outFile << fileList[i] << endl;
- 		compressionData(folderPath+"\\"+fileList[i],fileList[i]);
+		compressionData(folderPath + "\\" + fileList[i], "tmp.txt");
 		ifstream inFile;
-		inFile.open(fileList[i],ios::binary);
+		inFile.open("tmp.txt", ios::binary);
 		char c;
 		while (inFile)
 		{
 			inFile.get(c);
 			if (inFile.eof())
 				break;
-			outFile << c;	
+			outFile << c;
 		}
 		outFile << endl;//đánh dấu xong 1 tệp
 		inFile.close();
@@ -68,16 +68,16 @@ void compressionFolder(string folderPath, ofstream &outFile,string folderName )
 	for (int i = 0; i < folderList.size(); i++)
 	{
 		cout << folderList[i] << endl;
-		compressionFolder(folderList[i], outFile, folderName);
+		compressionFolder(folderList[i], outFile);
 	}
-	
+
 }
-void depressionFolder(string folderpath, ifstream &infile)
+void depressionFolder(string folderpath, ifstream& infile)
 {
 	string namefolder;
 	getline(infile, namefolder);
 	folderpath += ("\\" + namefolder);
-	char *s;
+	char* s;
 	s = new char[Max];
 	int i = 0;
 	while (i < folderpath.length())

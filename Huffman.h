@@ -4,7 +4,6 @@
 //#define MAX_CHAR
 #define MAX_CODE 256
 #include<fstream>
-#include<string>
 #include<vector>
 using namespace std;
 
@@ -23,10 +22,10 @@ struct HuffmanTree
 
 struct Code
 {
-	char code[MAX_CODE];
-	unsigned size;
+	string code;
 	char c;
 	long frequence;
+
 };
 
 HuffmanNode* creatNode(char c, long freq);//khởi tạo một node
@@ -43,13 +42,7 @@ HuffmanTree* creatAndBuildMinHeap(char arr[], long frequence[], unsigned size);/
 HuffmanTree* buildHuffmanTree(char arr[], long frequence[], unsigned size);//xây dựng cây huffman
 vector<Code> findCodeTable(char arr[], long frequence[], unsigned size);
 
-//char convertBinarytoDeci(char binary[], unsigned size);
 string convertDecimalToBinary(int Deci);
+void findCode(HuffmanNode* tree, vector<Code>& table, string code, int top);
+void convert(string arrCode[], vector<Code>table);
 
-
-//tesst
-void findCode(HuffmanNode* tree, vector<Code> &table, char code[], int top);
-void printCode(char code[],unsigned size);
-void printMinHeap(HuffmanTree* tree);
-void printTree(HuffmanTree* tree);
-void printArrCode(vector<Code>arrCode);

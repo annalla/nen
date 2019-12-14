@@ -86,7 +86,7 @@ HuffmanNode* getMinNode(HuffmanTree* tree)
 void insertNodeIntoTree(HuffmanTree* tree, HuffmanNode* Node)
 {
 	++tree->size;
-	int i = tree->size-1;
+	int i = tree->size - 1;
 
 	while (i && Node->frequence < tree->array[(i - 1) / 2]->frequence)
 	{
@@ -99,10 +99,10 @@ void insertNodeIntoTree(HuffmanTree* tree, HuffmanNode* Node)
 }
 HuffmanTree* buildHuffmanTree(char arr[], long frequence[], unsigned size)
 {
-	HuffmanTree* tree = creatAndBuildMinHeap(arr, frequence,size);
+	HuffmanTree* tree = creatAndBuildMinHeap(arr, frequence, size);
 	HuffmanNode* pLeft, * pRight, * top;
 
-	while (isSizeOne(tree)!=1)
+	while (isSizeOne(tree) != 1)
 	{
 		pLeft = getMinNode(tree);
 		pRight = getMinNode(tree);
@@ -120,23 +120,25 @@ HuffmanTree* buildHuffmanTree(char arr[], long frequence[], unsigned size)
 vector<Code> findCodeTable(char arr[], long frequence[], unsigned size)
 {
 	HuffmanTree* tree = buildHuffmanTree(arr, frequence, size);
-	char code[MAX_CODE];
+	string code = "";
 	vector<Code>arrCode;
 
-	findCode(tree->array[0], arrCode, code,0);
+	findCode(tree->array[0], arrCode, code, 0);
 
 	return arrCode;
 }
 
-void findCode(HuffmanNode* tree, vector<Code> &table, char code[], int top)
+void findCode(HuffmanNode* tree, vector<Code>& table, string code, int top)
 {
 	if (tree->pLeft)
 	{
+		code += '0';
 		code[top] = '0';
 		findCode(tree->pLeft, table, code, top + 1);
 	}
 	if (tree->pRight)
 	{
+		code += '1';
 		code[top] = '1';
 		findCode(tree->pRight, table, code, top + 1);
 	}
@@ -144,25 +146,20 @@ void findCode(HuffmanNode* tree, vector<Code> &table, char code[], int top)
 	{
 		Code x;
 		x.c = tree->c;
-		x.size = top;
 		x.frequence = tree->frequence;
-		for (int i = 0; i < top; i++)
-			x.code[i] = code[i];
+		code = code.substr(0, top);
+		x.code = code;
 		table.push_back(x);
 	}
 }
 
-//char convertBinarytoDeci(char binary[], unsigned size)
-//{
-//	char deci = 0;
-//	for (int i = 0; i < size; i++)
-//	{
-//		if (binary[i])
-//			;
-//	
-//	}
-//	return deci;
-//}
+void convert(string arrCode[], vector<Code>table)
+{
+	for (int i = 0; i < table.size(); i++)
+	{
+		arrCode[unsigned char(table[i].c)] = table[i].code;
+	}
+}
 
 string convertDecimalToBinary(int Deci)
 {
@@ -175,48 +172,7 @@ string convertDecimalToBinary(int Deci)
 		kq += (((Deci >> j) & 1) + 48);
 	}
 	--i;
-	/*while (Deci)
-	{
-		if (Deci % 2)
-			kq += '1';
-		else
-			kq += '0';
-		Deci /= 2;
-		
-	}
-	while (kq.length() != 8)
-	{
-		kq +='0';
-	}
-	reverse(kq.begin(), kq.end());*/
 
 	return kq;
 }
 
-//test
-void printCode(char code[], unsigned size)
-{
-	for (int i = 0; i < size; i++)
-		cout <<  code[i];
-	cout << "\n";
-}
-
-void printTree(HuffmanTree* tree)
-{
-	for (int i = 0; i < tree->size; i++)
-		cout << tree->array[i]->frequence << " ";
-}
-
-void printMinHeap(HuffmanTree* tree)
-{
-	for (int i = 0; i < tree->size; i++)
-		cout << tree->array[i]->frequence << " ";
-}
-void printArrCode(vector<Code>arrCode)
-{
-	for (int i = 0; i < arrCode.size(); i++)
-	{
-		cout << arrCode[i].c << "-";
-		printCode(arrCode[i].code,arrCode[i].size);
-	}
-}

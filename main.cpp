@@ -1,8 +1,22 @@
 #include"File.h"
 #include"Folder.h"
+#include<string>
 
 int main()
 {
+	ifstream infile;
+	ofstream outfile;
+	///*infile.open("corpus-title.txt", ios::binary);
+	//compressionData("Text.txt", "kq.txt");
+	//decodedFile("kq.txt", "giainen.txt");*/
+	//outfile.open("Text.txt", ios::binary);
+
+	//compressionFolder("Nhung", outfile);
+	//outfile.close();
+
+	//infile.open("Text.txt", ios::binary);
+	//depressionFolder("Test", infile);
+
 	int h;
 	do
 	{
@@ -14,6 +28,7 @@ int main()
 		cout << "4.Depression Folder!\n";
 		cout << "Choose:";
 		cin >> h;
+		cin.ignore();
 		switch (h)
 		{
 		case 1:
@@ -22,9 +37,10 @@ int main()
 			cout << "1.Compression File!\n";
 			string in, out;
 			cout << "Input Link to File needed to be compressed:";
-			cin >> in;
+			getline(cin, in);
+			//cin >> in;
 			cout << "Input Link to File after compression:";
-			cin >> out;
+			getline(cin, out);
 			compressionData(in, out);
 			break;
 		}
@@ -34,7 +50,9 @@ int main()
 			cout << "2.Depression File!\n";
 			string in, out;
 			cout << "Input Link to File needed to be decoded:";
-			cin >> in;
+			getline(cin, in);
+			//cin.ignore();
+			//cin >> in;
 			cout << "Input Link to File after decoding:";
 			cin >> out;
 			decodedFile(in, out);
@@ -44,14 +62,15 @@ int main()
 		{
 			string ddoutfile;
 			string folderpath1;
-	
+
 			system("cls");
 			cout << "3.Compression Folder!\n";
-		
+
 			cout << "Input Link to Folder needed to be compressed:";
-			cin >> folderpath1;
+			getline(cin, folderpath1);
+			//cin.ignore();
 			cout << "Input Link to Folder after compression:";
-			cin >> ddoutfile;
+			getline(cin,ddoutfile);
 
 			string nameFolder = "";
 			int i = folderpath1.size() - 1;
@@ -62,7 +81,7 @@ int main()
 			}
 			ofstream outfile1;
 			outfile1.open(ddoutfile, ios::binary);
-			compressionFolder(folderpath1, outfile1,nameFolder);
+			compressionFolder(folderpath1, outfile1);
 			outfile1.close();
 			break;
 		}
@@ -72,10 +91,11 @@ int main()
 			cout << "4.Depression Folder!\n";
 			string ddoutfile;
 			cout << "Input Link to Folder needed to be decoded:";
-			cin >> ddoutfile;
+			getline(cin,ddoutfile);
+			//cin.ignore();
 			string folderpath;
 			cout << "Input Link to Folder after decoding:";
-			cin >> folderpath;
+			getline(cin,folderpath);
 			ifstream infile;
 			infile.open(ddoutfile, ios::binary);
 			depressionFolder(folderpath, infile);
@@ -89,25 +109,6 @@ int main()
 		}
 		}
 	} while (h != 0);
-
-	//string in = "c:\\users\\asus\\Downloads\\corpus-title\\tt.txt";//link file muon giai nen
-	//string out = "c:\\users\\asus\\Downloads\\kq.txt";//link file kq
-	//string c = "c:\\users\\asus\\Downloads\\test.txt";// link file test
-	//
-	
-	system("pause");
-
-
-	//string ddoutfile = "c:\\users\\asus\\documents\\folder.txt";//link file sau khi nen
-	//string foldername = "test";// Ten folder
-	//string folderpath1 = "c:\\users\\asus\\documents\\test";// link folder muon nen
-	//
-
-	//string folderpath = "c:\\users\\asus\\downloads";// dia chi folder moi
-	//ifstream infile;
-	//infile.open(ddoutfile, ios::binary);
-	//depressionFolder(folderpath, infile);
-	//infile.close();
 
 	system("pause");
 	return 0;

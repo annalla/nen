@@ -173,7 +173,10 @@ void decodedData(ifstream& infile, string outName)//giải nén dữ liệu từ
 	infile >> size;
 	///
 	if(size==0)
+	{
+		outfile.close();
 		return;
+	}
 	if (size == 1)
 	{
 		while (infile)

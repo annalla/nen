@@ -172,6 +172,8 @@ void decodedData(ifstream& infile, string outName)//giải nén dữ liệu từ
 	//đọc bảng tần số, data và build encodeData
 	infile >> size;
 	///
+	if(size==0)
+		return;
 	if (size == 1)
 	{
 		while (infile)
